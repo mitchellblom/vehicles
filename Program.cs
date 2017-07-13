@@ -12,6 +12,7 @@ namespace vehicles
         double EngineVolume { get; set; }
         void Start();
         void Stop();
+        void Drive();
     }
 
     public interface IDoors
@@ -88,7 +89,7 @@ namespace vehicles
         }
     }
 
-    public class Motorcycle : IVehicle
+    public class Motorcycle : IVehicle, ILandCraft
     {
         public int Wheels { get; set; } = 2;
         public int Doors { get; set; } = 0;
@@ -113,7 +114,7 @@ namespace vehicles
         }
     }
 
-    public class Car : IVehicle, IDoors
+    public class Car : IVehicle, IDoors, ILandCraft
     {
         public int Wheels { get; set; } = 4;
         public int Doors { get; set; } = 4;
@@ -212,7 +213,9 @@ namespace vehicles
             Car car1 = new Car(); 
             Motorcycle moto1 = new Motorcycle(); 
             Cessna cessna1 = new Cessna(); 
-            Helicopter heli1 = new Helicopter(); 
+            Helicopter heli1 = new Helicopter();
+            JetSki jetski1 = new JetSki();
+            FishingBoat fish1 = new FishingBoat();
 
             // Build a collection of all vehicles that fly
 
@@ -228,17 +231,28 @@ namespace vehicles
 
             // Build a collection of all vehicles that operate on roads
 
-            List<string> landVehicles = new List<string>() {"Motorcycle", "Car"};
+            List<ILandCraft> landVehicles = new List<ILandCraft>() {};
+            landVehicles.Add(moto1);
+            landVehicles.Add(car1);
 
             // With a single `foreach`, have each road vehicle Drive()
 
-
+            foreach (ILandCraft vehicle in landVehicles) {
+                vehicle.Drive();
+            }
 
             // Build a collection of all vehicles that operate on water
 
-            List<string> waterVehicles = new List<string>() {"JetSki", "FishingBoat"};
+            List<IVehicle> waterVehicles = new List<IVehicle>() {};
+            waterVehicles.Add(jetski1);
+            waterVehicles.Add(fish1);
             
             // With a single `foreach`, have each water vehicle Drive()
+
+            foreach (IVehicle vehicle in landVehicles) {
+                vehicle.Drive();
+            }
+
         }
 
     }
